@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity(), OnTaskItemClicked {
 
     private val routineList: MutableList<String> = mutableListOf()
     lateinit var mAdapter: RoutineAdapter
+    lateinit var dbHandler: DatabaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,22 @@ class MainActivity : AppCompatActivity(), OnTaskItemClicked {
         mAdapter = RoutineAdapter(this, routineList, this)
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.adapter = mAdapter
+
+        dbHandler = DatabaseHandler(this)
+
+        addBtn.setOnClickListener {
+            dbHandler.insertRoutine("Drink water", "Healthy to mind and skin", "Tue")
+        }
+
+        update.setOnClickListener {
+            dbHandler.updateRoutine(1, "Drink Milk", "For stronger bones", "Mon")
+        }
+
+        delete.setOnClickListener {
+            dbHandler.deleteRoutine(2)
+        }
+
+
 
     }
 
